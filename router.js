@@ -9,5 +9,6 @@ const { isAdmin } = require('midwest-module-membership/passport/authorization-mi
 router.route('/')
   .get(mw.get)
   .patch(isAdmin, mw.update)
+  .put(isAdmin, mw.update)
 
 module.exports = router
