@@ -30,11 +30,11 @@
   "homepage": "https://github.com/thebitmill/midwest-service-organization#readme",
   "dependencies": {
     "express": "^4.14.0",
-    "lodash": "^4.16.4",
-    "midwest": "^0.1.0"
+    "lodash": "^4.16.6",
+    "midwest": "^0.2.1"
   },
   "devDependencies": {
-    "eslint": "^3.8.1",
+    "eslint": "^3.9.1",
     "eslint-config-airbnb-base": "^9.0.0"
   }
 }
