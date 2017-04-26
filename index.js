@@ -1,7 +1,12 @@
 'use strict';
 
-module.exports = {
-  routes: require('./routes'),
-  middleware: require('./middleware'),
-  model: require('./model'),
+const _ = require('lodash');
+const deepFreeze = require('deep-freeze');
+
+const config = require('./config-base');
+
+exports.configure = (userConfig) => {
+  _.merge(config, userConfig);
+
+  deepFreeze(config);
 };

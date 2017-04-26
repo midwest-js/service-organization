@@ -6,8 +6,11 @@ const mw = require('./middleware');
 
 const { isAdmin } = require('midwest-module-membership/passport/authorization-middleware');
 
+console.log(Object.keys(mw));
+
 router.route('/')
-  .get(mw.get)
+  .get(mw.findOne)
+  .post(isAdmin, mw.create)
   .patch(isAdmin, mw.update)
   .put(isAdmin, mw.update);
 

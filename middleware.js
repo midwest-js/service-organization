@@ -1,43 +1,37 @@
 'use strict';
 
-const Organization = require('./model');
+const rest = require('midwest/factories/rest');
+const formatQuery = require('midwest/factories/format-query');
+const paginate = require('midwest/factories/paginate');
 
-const _ = require('lodash');
+const handlers = require('./handlers');
 
-function get(req, res, next) {
-  if (!res.app.locals.organization) {
-    Organization.findOne({}, (err, organization) => {
-      res.app.locals.organization = organization;
+const mw = rest({
+  plural: 'organizations',
+  handlers,
+});
 
-      if (res.locals) res.locals.organization = organization;
+function create(req, res, next) {
+  Object.assign(req.body, {
+    createdById: req.user.id,
+  });
 
-      if (next) next();
-    });
-  } else {
-    res.locals.organization = res.app.locals.organization;
-    next();
-  }
+  mw.create(req, res, next);
 }
 
 function update(req, res, next) {
-  Organization.findOne({}, (err, organization) => {
-    _.difference(_.keys(organization.toObject()), _.keys(req.body)).forEach((key) => {
-      organization[key] = undefined;
-    });
+  console.log(req.body);
+  return handlers.update(1, req.body).then((row) => {
+    // TODO return different status if nothing updated
+    res.status(201).locals.organization = row;
 
-    _.extend(organization, _.omit(req.body, '_id', '__v'));
-
-    return organization.save((err) => {
-      if (err) return next(err);
-
-      res.app.locals.organization = organization;
-
-      return res.status(200).json(organization);
-    });
-  });
+    next();
+  }).catch(next);
 }
 
-module.exports = {
-  get,
+module.exports = Object.assign({}, mw, {
+  create,
   update,
-};
+  formatQuery: formatQuery(['page', 'limit', 'sort']),
+  paginate: paginate(handlers.count, 20),
+});
