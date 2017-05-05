@@ -1,7 +1,8 @@
 'use strict';
 
-// modules > midwest
+const _ = require('lodash');
 const factory = require('midwest/factories/handlers');
+const resolveCache = require('./resolve-cache');
 
 const columns = [
   'id',
@@ -19,19 +20,19 @@ const columns = [
   // 'image',
   'name',
   'url',
-  'dateCreated',
+  'createdAt',
   'createdById',
-  'dateModified',
+  'modifiedAt',
   'modifiedById',
 ];
 
-const config = require('./config');
+module.exports = _.memoize((config) => {
+  const handlers = factory({
+    db: config.db,
+    emitter: config.emitter,
+    table: 'organizations',
+    columns,
+  });
 
-const handlers = factory({
-  db: config.db,
-  emitter: config.emitter,
-  table: 'organizations',
-  columns,
-});
-
-module.exports = handlers;
+  return handlers;
+}, resolveCache);

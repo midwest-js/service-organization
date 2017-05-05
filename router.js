@@ -1,13 +1,19 @@
 'use strict';
 
-const router = new (require('express')).Router();
+const _ = require('lodash');
+const express = require('express');
+const resolveCache = require('./resolve-cache');
 
-const mw = require('./middleware');
+module.exports = _.memoize((config) => {
+  const router = new express.Router();
 
-router.route('/')
-  .get(mw.findOne)
-  .post(mw.create)
-  .patch(mw.update)
-  .put(mw.update);
+  const mw = require('./middleware')(config);
 
-module.exports = router;
+  router.route('/')
+    .get(mw.findOne)
+    .post(mw.create)
+    .patch(mw.update)
+    .put(mw.update);
+
+  return router;
+}, resolveCache);
