@@ -3,9 +3,6 @@
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
-  "bin": {
-    "create-organization": "./bin/create-organization.js"
-  },
   "scripts": {
     "lint": "eslint *.js",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,12 +26,16 @@
   },
   "homepage": "https://github.com/thebitmill/midwest-service-organization#readme",
   "dependencies": {
-    "express": "^4.15.2",
+    "express": "^4.16.2",
     "lodash": "^4.17.4",
     "midwest": "^0.4.2"
   },
   "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.1.3"
+    "eslint": "^4.10.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }
