@@ -3,8 +3,8 @@
 const _ = require('lodash')
 const factory = require('midwest/factories/rest-handlers')
 const resolver = require('deep-equal-resolver')()
-const sql = require('easy-postgres/sql-helpers')
-const { one } = require('easy-postgres/result')
+const sql = require('@bmp/pg/sql-helpers')
+const { one } = require('@bmp/pg/result')
 
 const columns = [
   'id',
